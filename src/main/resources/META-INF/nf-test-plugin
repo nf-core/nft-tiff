@@ -1,0 +1,5 @@
+moduleName=nft-geotiff
+moduleVersion=0.1.0
+moduleAuthors=nf-core
+extensionMethods=nf-core.nf.test.geotiff.Methods
+extensionClasses=nf-core.nf.test.geotiff.PathExtension
