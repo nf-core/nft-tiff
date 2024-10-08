@@ -1,6 +1,6 @@
-# nft-geotiff
+# nft-tiff
 
-An nf-test plugin to test nft-geotiff files
+An nf-test plugin to test nft-tiff files
 
 
-Please read the [documentation](https://nf-core.github.io/nft-geotiff) for more information.
+Please read the [documentation](https://nf-core.github.io/nft-tiff) for more information.

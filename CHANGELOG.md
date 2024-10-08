@@ -2,4 +2,4 @@
 
 ## 0.1.0
 
-Initial release of nft-geotiff
+Initial release of nft-tiff

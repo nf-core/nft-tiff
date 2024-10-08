@@ -1,7 +1,7 @@
-site_name: nf-core/nft-geotiff
-repo_name: nf-core/nft-geotiff
-repo_url: https://github.com/nf-core/nft-geotiff
-site_url: https://nf-core.github.io/nft-geotiff
+site_name: nf-core/nft-tiff
+repo_name: nf-core/nft-tiff
+repo_url: https://github.com/nf-core/nft-tiff
+site_url: https://nf-core.github.io/nft-tiff
 
 nav:
   - Home: index.md

@@ -1,6 +1,6 @@
-# nft-geotiff
+# nft-tiff
 
-An nf-test plugin to test nft-geotiff files
+An nf-test plugin to test nft-tiff files
 
 ## Start using the plugin
 
@@ -9,7 +9,7 @@ To start using the plugin please add it to your `nf-test.config` file:
 ```groovy title="nf-test.config"
 config {
     plugins {
-        load "nft-geotiff@0.1.0"
+        load "nft-tiff@0.1.0"
     }
 }
 ```
@@ -18,18 +18,18 @@ config {
 
 To use the development version, please do the following steps:
 
-- Clone the [nft-geotiff repository](https://github.com/nf-core/nft-geotiff)
+- Clone the [nft-tiff repository](https://github.com/nf-core/nft-tiff)
 
 === "HTTPS"
 
     ```bash
-    git clone https://github.com/nf-core/nft-geotiff.git
+    git clone https://github.com/nf-core/nft-tiff.git
     ```
 
 === "SSH"
 
     ```bash
-    git clone git@github.com:nf-core/nft-geotiff.git
+    git clone git@github.com:nf-core/nft-tiff.git
     ```
 
 - Run the build script

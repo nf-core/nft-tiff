@@ -4,13 +4,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.nf-core</groupId>
-	<artifactId>nft-geotiff</artifactId>
+	<artifactId>nft-tiff</artifactId>
 	<version>0.1.0</version>
 	<packaging>jar</packaging>
 
-	<name>nft-geotiff</name>
-	<description>An nf-test plugin to test nft-geotiff files</description>
-	<url>https://github.com/nf-core/nft-geotiff</url>
+	<name>nft-tiff</name>
+	<description>An nf-test plugin to test nft-tiff files</description>
+	<url>https://github.com/nf-core/nft-tiff</url>
 
 	<licenses>
 		<license>
@@ -20,9 +20,9 @@
 	</licenses>
 
 	<scm>
-		<url>https://github.com/nf-core/nft-geotiff/tree/master</url>
-		<connection>scm:git:https://github.com/nf-core/nft-geotiff</connection>
-		<developerConnection>scm:git:ssh://github.com:nf-core/nft-geotiff.git</developerConnection>
+		<url>https://github.com/nf-core/nft-tiff/tree/master</url>
+		<connection>scm:git:https://github.com/nf-core/nft-tiff</connection>
+		<developerConnection>scm:git:ssh://github.com:nf-core/nft-tiff.git</developerConnection>
 	</scm>
 
 	<properties>

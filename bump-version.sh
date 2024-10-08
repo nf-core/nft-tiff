@@ -9,7 +9,7 @@ sed -i -e "s/moduleVersion=.*/moduleVersion=$version/" ./src/main/resources/META
 
 if [[ $version != *dev ]]
 then
-    sed -i -e "s/load \"nft-geotiff@.*\"/load \"nft-geotiff@$version\"/" ./docs/index.md
+    sed -i -e "s/load \"nft-tiff@.*\"/load \"nft-tiff@$version\"/" ./docs/index.md
 fi
 
 ./build.sh

@@ -1,4 +1,4 @@
-package nf-core.nf.test.geotiff;
+package nf-core.nf.test.tiff;
 
 /*
  * Add your custom extensions to the path() method
@@ -9,7 +9,7 @@ package nf-core.nf.test.geotiff;
 public class PathExtension {
 
 	public static void hello() {
-		System.out.println("Hello from nft-geotiff");
+		System.out.println("Hello from nft-tiff");
 	}
 
 }
