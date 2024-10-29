@@ -1,4 +1,4 @@
-package nf-core.nf.test.tiff;
+package nf_core.nf.test.tiff;
 
 /*
  * Add your custom methods to nf-test
