@@ -1,38 +1,46 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.nf-core</groupId>
-	<artifactId>nft-tiff</artifactId>
-	<version>0.1.0</version>
-	<packaging>jar</packaging>
+  <groupId>com.nf-core</groupId>
+  <artifactId>nft-tiff</artifactId>
+  <version>0.1.0</version>
+  <packaging>jar</packaging>
 
-	<name>nft-tiff</name>
-	<description>An nf-test plugin to test nft-tiff files</description>
-	<url>https://github.com/nf-core/nft-tiff</url>
+  <name>nft-tiff</name>
+  <description>An nf-test plugin to test nft-tiff files</description>
+  <url>https://github.com/nf-core/nft-tiff</url>
 
-	<licenses>
-		<license>
-			<name>MIT License</name>
-			<url>http://www.opensource.org/licenses/mit</url>
-		</license>
-	</licenses>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://www.opensource.org/licenses/mit</url>
+    </license>
+  </licenses>
 
-	<scm>
-		<url>https://github.com/nf-core/nft-tiff/tree/master</url>
-		<connection>scm:git:https://github.com/nf-core/nft-tiff</connection>
-		<developerConnection>scm:git:ssh://github.com:nf-core/nft-tiff.git</developerConnection>
-	</scm>
+  <scm>
+    <url>https://github.com/nf-core/nft-tiff/tree/master</url>
+    <connection>scm:git:https://github.com/nf-core/nft-tiff</connection>
+    <developerConnection>scm:git:ssh://github.com:nf-core/nft-tiff.git</developerConnection>
+  </scm>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>11</java.version>
-		<maven.compiler.release>${java.version}</maven.compiler.release>
-		<maven.compiler.source>${java.version}</maven.compiler.source>
-		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<additionalparam>-Xdoclint:none</additionalparam>
-	</properties>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>11</java.version>
+    <maven.compiler.release>${java.version}</maven.compiler.release>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <additionalparam>-Xdoclint:none</additionalparam>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>mil.nga</groupId>
+      <artifactId>tiff</artifactId>
+      <version>3.0.0</version>
+    </dependency>
+  </dependencies>
 
   <build>
     <plugins>
