@@ -1,0 +1,44 @@
+nextflow_process {
+
+    name "Validate tiff metadata"
+    script "./main.nf"
+    process "COPY_TIFF"
+
+    tag "methods"
+
+    test("check can read tiff") {
+        when {
+            process {
+                """
+                input[0] = Channel.of(
+                    file("${baseDir}/tests/mindagap.mouse_heart.wga.tiff", checkIfExists:true),
+                )
+                """
+            }
+        }
+        then {
+            def tiff = path(process.out.tiff[0]).tiff
+            assert tiff.meta != null
+            assert tiff.bitmaps != null
+        }
+    }
+
+    test("check compare same tiff") {
+        when {
+            process {
+                """
+                input[0] = Channel.of(
+                    file("${baseDir}/tests/mindagap.mouse_heart.wga.tiff", checkIfExists:true),
+                )
+                """
+            }
+        }
+        then {
+            def tiff = path(process.out.tiff[0]).tiff
+            def reference = path("${baseDir}/tests/mindagap.mouse_heart.wga.tiff").tiff
+            assert tiff.meta == reference.meta
+            assert tiff.bitmaps == reference.bitmaps
+        }
+    }
+
+}
