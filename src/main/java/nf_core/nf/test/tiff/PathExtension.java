@@ -1,15 +1,24 @@
 package nf_core.nf.test.tiff;
 
+import mil.nga.tiff.TIFFImage;
+import mil.nga.tiff.TiffReader;
+
+import java.io.IOException;
+import java.nio.file.Path;
+
 /*
- * Add your custom extensions to the path() method
- * 
+ * Adds custom extensions to the path() method
+ *
  * @author: nf-core
  */
-
 public class PathExtension {
 
-	public static void hello() {
-		System.out.println("Hello from nft-tiff");
-	}
+  /**
+   * Allows calling {@code path('filename').tiff} in nf-test
+   */
+  public static TiffValidator getTiff(Path self) throws IOException {
+    TIFFImage image = TiffReader.readTiff(self.toFile());
+    return new TiffValidator(image);
+  }
 
 }
