@@ -11,7 +11,7 @@ nextflow_process {
             process {
                 """
                 input[0] = Channel.of(
-                    file("${baseDir}/tests/mindagap.mouse_heart.wga.tiff", checkIfExists:true),
+                    file("${baseDir}/tests/nuclear_image.tif", checkIfExists:true),
                 )
                 """
             }
@@ -28,14 +28,16 @@ nextflow_process {
             process {
                 """
                 input[0] = Channel.of(
-                    file("${baseDir}/tests/mindagap.mouse_heart.wga.tiff", checkIfExists:true),
+                    file("${baseDir}/tests/nuclear_image.tif", checkIfExists:true),
                 )
                 """
             }
         }
         then {
             def tiff = path(process.out.tiff[0]).tiff
-            def reference = path("${baseDir}/tests/mindagap.mouse_heart.wga.tiff").tiff
+            // def reference = path("${baseDir}/tests/mindagap.mouse_heart.wga.tiff").tiff
+            def reference = path("${baseDir}/tests/nuclear_image.tif").tiff
+            // def reference = path("${baseDir}/tests/nuclear_image_modified.tif").tiff
             assert tiff.meta == reference.meta
             assert tiff.bitmaps == reference.bitmaps
         }
