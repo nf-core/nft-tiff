@@ -3,7 +3,7 @@ process COPY_TIFF {
     path(tiff)
 
     output:
-    path("*.tiff"), emit: tiff
+    path("*.tif*"), emit: tiff
 
     script:
     """

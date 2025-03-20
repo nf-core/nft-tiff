@@ -45,6 +45,24 @@ public class BitmapValidator {
 
     compare(r1.getHeight(), r2.getHeight(), "height");
     compare(r1.getWidth(), r2.getWidth(), "width");
+    compare(r1.getBitsPerSample(), r2.getBitsPerSample(), "bitspersample");
+    compare(r1.getSamplesPerPixel(), r2.getSamplesPerPixel(), "samplesperpixel");
+
+    int width = r1.getWidth();
+    int height = r1.getHeight();
+    int bands = r1.getSamplesPerPixel();
+
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        for (int band = 0; band < bands; band++) {
+          Number value1 = r1.getPixelSample(band, x, y);
+          Number value2 = r2.getPixelSample(band, x, y);
+          compare(value1, value2, "pixel");
+        }
+      }
+    }
+
+
     return true;
   }
 
