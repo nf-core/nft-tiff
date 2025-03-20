@@ -11,7 +11,7 @@ nextflow_process {
             process {
                 """
                 input[0] = Channel.of(
-                    file("${baseDir}/tests/nuclear_image.tif", checkIfExists:true),
+                    file("${baseDir}/tests/mindagap.mouse_heart.wga.tiff", checkIfExists:true),
                 )
                 """
             }
@@ -28,6 +28,24 @@ nextflow_process {
             process {
                 """
                 input[0] = Channel.of(
+                    file("${baseDir}/tests/mindagap.mouse_heart.wga.tiff", checkIfExists:true),
+                )
+                """
+            }
+        }
+        then {
+            def tiff = path(process.out.tiff[0]).tiff
+            def reference = path("${baseDir}/tests/mindagap.mouse_heart.wga.tiff").tiff
+            assert tiff.meta == reference.meta
+            assert tiff.bitmaps == reference.bitmaps
+        }
+    }
+
+    test("detect tiff pixel difference") {
+        when {
+            process {
+                """
+                input[0] = Channel.of(
                     file("${baseDir}/tests/nuclear_image.tif", checkIfExists:true),
                 )
                 """
@@ -35,11 +53,15 @@ nextflow_process {
         }
         then {
             def tiff = path(process.out.tiff[0]).tiff
-            // def reference = path("${baseDir}/tests/mindagap.mouse_heart.wga.tiff").tiff
-            def reference = path("${baseDir}/tests/nuclear_image.tif").tiff
-            // def reference = path("${baseDir}/tests/nuclear_image_modified.tif").tiff
+            def reference = path("${baseDir}/tests/nuclear_image_modified.tif").tiff
             assert tiff.meta == reference.meta
-            assert tiff.bitmaps == reference.bitmaps
+
+            try {
+                tiff.bitmaps == reference.bitmaps
+                assert false : "Should have detected pixel difference between images!"
+            } catch (Exception e) {
+                assert e.message == "Bitmap 'pixel' does not match: '138' != '160'"
+            }
         }
     }
 
