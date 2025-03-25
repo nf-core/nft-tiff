@@ -71,4 +71,82 @@ public class BitmapValidator {
       throw new RuntimeException(String.format("Bitmap '%s' does not match: '%s' != '%s'", description, a, b));
     }
   }
+
+  /**
+   * Compares this image with a reference image and returns true if at least the specified percentage of pixels match.
+   * 
+   * @param referenceValidator The validator containing the reference image to compare with
+   * @param matchPercentage The minimum percentage of pixels that must match (0.0 to 100.0)
+   * @return true if the images match with at least the specified percentage
+   * @throws RuntimeException if the images have different structural properties
+   * @throws IllegalArgumentException if matchPercentage is not between 0 and 100
+   */
+
+  public boolean matchesWithTolerance(BitmapValidator referenceValidator, double matchPercentage) {
+    if (matchPercentage < 0.0 || matchPercentage > 100.0) {
+        throw new IllegalArgumentException("Match percentage must be between 0.0 and 100.0");
+    }
+    
+    List<FileDirectory> dirs = this.image.getFileDirectories();
+    List<FileDirectory> refDirs = referenceValidator.image.getFileDirectories();
+    
+    if (dirs.size() != refDirs.size()) {
+        throw new RuntimeException(String.format("Number of dirs does not match: '%s' vs '%s'", dirs.size(), refDirs.size()));
+    }
+    
+    // NOTE: this assumes dirs are always in same order
+    for (int i = 0; i < dirs.size(); i++) {
+        if (!matchesWithTolerance(dirs.get(i), refDirs.get(i), matchPercentage)) return false;
+    }
+    
+    return true;
+  }
+
+  /**
+   * Compares two file directories and checks if at least the specified percentage of pixels match.
+   * 
+   * @param dir1 The first directory
+   * @param dir2 The second directory
+   * @param matchPercentage The minimum percentage of pixels that must match
+   * @return true if at least the specified percentage of pixels match
+   * @throws RuntimeException if directories have different structural properties
+   */
+  private boolean matchesWithTolerance(FileDirectory dir1, FileDirectory dir2, double matchPercentage) {
+      Rasters r1 = dir1.readRasters();
+      Rasters r2 = dir2.readRasters();
+      
+      // These properties must match exactly
+      compare(r1.getHeight(), r2.getHeight(), "height");
+      compare(r1.getWidth(), r2.getWidth(), "width");
+      compare(r1.getBitsPerSample(), r2.getBitsPerSample(), "bitspersample");
+      compare(r1.getSamplesPerPixel(), r2.getSamplesPerPixel(), "samplesperpixel");
+      
+      int width = r1.getWidth();
+      int height = r1.getHeight();
+      int bands = r1.getSamplesPerPixel();
+      
+      long totalPixels = (long) width * height * bands;
+      long matchingPixels = 0;
+      
+      // Compare each pixel
+      for (int y = 0; y < height; y++) {
+          for (int x = 0; x < width; x++) {
+              for (int band = 0; band < bands; band++) {
+                  Number value1 = r1.getPixelSample(band, x, y);
+                  Number value2 = r2.getPixelSample(band, x, y);
+                  
+                  if (Objects.equals(value1, value2)) {
+                      matchingPixels++;
+                  }
+              }
+          }
+      }
+      
+      double percentage = (double) matchingPixels / totalPixels * 100.0;
+      
+      // print percentage of matching pixels
+      System.out.println("Percentage of matching pixels: " + percentage);
+      return percentage >= matchPercentage;
+
+  }
 }
