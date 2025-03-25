@@ -96,7 +96,12 @@ public class BitmapValidator {
     
     // NOTE: this assumes dirs are always in same order
     for (int i = 0; i < dirs.size(); i++) {
-        if (!matchesWithTolerance(dirs.get(i), refDirs.get(i), matchPercentage)) return false;
+        double actualPercentage = getMatchPercentage(dirs.get(i), refDirs.get(i));
+        if (actualPercentage < matchPercentage) {
+            throw new RuntimeException(String.format(
+                "Images do not match with required tolerance. Required: %.2f%%, Actual: %.4f%%", 
+                matchPercentage, actualPercentage));
+        }
     }
     
     return true;
@@ -111,7 +116,7 @@ public class BitmapValidator {
    * @return true if at least the specified percentage of pixels match
    * @throws RuntimeException if directories have different structural properties
    */
-  private boolean matchesWithTolerance(FileDirectory dir1, FileDirectory dir2, double matchPercentage) {
+  private double getMatchPercentage(FileDirectory dir1, FileDirectory dir2) {
       Rasters r1 = dir1.readRasters();
       Rasters r2 = dir2.readRasters();
       
@@ -142,11 +147,7 @@ public class BitmapValidator {
           }
       }
       
-      double percentage = (double) matchingPixels / totalPixels * 100.0;
-      
-      // print percentage of matching pixels
-      System.out.println("Percentage of matching pixels: " + percentage);
-      return percentage >= matchPercentage;
+      return (double) matchingPixels / totalPixels * 100.0;
 
   }
 }

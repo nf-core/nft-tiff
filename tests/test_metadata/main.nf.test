@@ -98,7 +98,13 @@ nextflow_process {
             def reference = path("${baseDir}/tests/nuclear_image_modified.tif").tiff
             assert tiff.meta == reference.meta
 
-            assert tiff.bitmaps.matchesWithTolerance(reference.bitmaps, 100) == false
+            try {
+                tiff.bitmaps.matchesWithTolerance(reference.bitmaps, 100)
+                assert false : "Pixel difference percentage should have been greater than 0%"
+            } catch (Exception e) {
+                assert e.message ==~ "Images do not match with required tolerance. Required: 100.00%, Actual: 99.9992%"
+            }
+
         }
     }
 
