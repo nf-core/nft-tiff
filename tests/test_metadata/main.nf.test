@@ -123,10 +123,10 @@ nextflow_process {
         }
 
         then {
-            def stable_path = getAllFilesFromDir(params.outdir)
-            def bitmaps = stable_path.collect { path(it.path).tiff.bitmaps.md5() }
-
-            assert snapshot(bitmaps).match()
+            def tiff = path(process.out.tiff[0]).tiff
+            def md5  = tiff.bitmaps.md5()
+            
+            assert snapshot(md5).match()
         }
     }
 
