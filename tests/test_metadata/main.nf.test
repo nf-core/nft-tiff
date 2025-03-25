@@ -108,4 +108,26 @@ nextflow_process {
         }
     }
 
+    test("check bitmap equivalence with checksums") {
+        when {
+            params {
+                outdir = "$outputDir"
+            }
+            process {
+                """
+                input[0] = Channel.of(
+                    file("${baseDir}/tests/mindagap.mouse_heart.wga.tiff", checkIfExists:true),
+                )
+                """
+            }
+        }
+
+        then {
+            def stable_path = getAllFilesFromDir(params.outdir)
+            def bitmaps = stable_path.collect { path(it.path).tiff.bitmaps.md5() }
+
+            assert snapshot(bitmaps).match()
+        }
+    }
+
 }

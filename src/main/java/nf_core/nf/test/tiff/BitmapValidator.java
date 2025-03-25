@@ -4,6 +4,10 @@ import mil.nga.tiff.FileDirectory;
 import mil.nga.tiff.Rasters;
 import mil.nga.tiff.TIFFImage;
 
+import java.math.BigInteger;
+import java.nio.ByteOrder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Objects;
 
@@ -150,4 +154,32 @@ public class BitmapValidator {
       return (double) matchingPixels / totalPixels * 100.0;
 
   }
+
+  public String md5() {
+
+    MessageDigest md5;
+    try {
+      md5 = MessageDigest.getInstance("md5");
+    } catch (NoSuchAlgorithmException e) {
+      throw new RuntimeException(e);
+    }
+
+
+    for (FileDirectory dir : image.getFileDirectories()) {
+      Rasters rasters = dir.readRasters();
+
+      int height = rasters.getHeight();
+      int bands  = rasters.getSamplesPerPixel();
+
+      for (int y = 0; y < height; y++) {
+          for (int band = 0; band < bands; band++) {
+            md5.update(rasters.getSampleRow(y,band, ByteOrder.nativeOrder()));
+          }
+        }
+      }
+
+    byte[] digest = md5.digest();
+    return String.format("%032X", new BigInteger(1, digest));
+  }
+
 }
