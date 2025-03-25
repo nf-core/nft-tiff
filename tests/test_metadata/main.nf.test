@@ -65,4 +65,41 @@ nextflow_process {
         }
     }
 
+    test("check matchesWithTolerance same tiff") {
+        when {
+            process {
+                """
+                input[0] = Channel.of(
+                    file("${baseDir}/tests/mindagap.mouse_heart.wga.tiff", checkIfExists:true),
+                )
+                """
+            }
+        }
+        then {
+            def tiff = path(process.out.tiff[0]).tiff
+            def reference = path("${baseDir}/tests/mindagap.mouse_heart.wga.tiff").tiff
+            assert tiff.meta == reference.meta
+            assert tiff.bitmaps.matchesWithTolerance(reference.bitmaps, 100)
+        }
+    }
+
+    test("detect tiff pixel difference with tolerance") {
+        when {
+            process {
+                """
+                input[0] = Channel.of(
+                    file("${baseDir}/tests/nuclear_image.tif", checkIfExists:true),
+                )
+                """
+            }
+        }
+        then {
+            def tiff = path(process.out.tiff[0]).tiff
+            def reference = path("${baseDir}/tests/nuclear_image_modified.tif").tiff
+            assert tiff.meta == reference.meta
+
+            assert tiff.bitmaps.matchesWithTolerance(reference.bitmaps, 100) == false
+        }
+    }
+
 }
