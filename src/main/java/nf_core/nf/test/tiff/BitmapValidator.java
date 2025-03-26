@@ -154,9 +154,14 @@ public class BitmapValidator {
       return (double) matchingPixels / totalPixels * 100.0;
 
   }
-
+  
+  /**
+   * Computes the md5 checksum over all entries in the bitmap of this image
+   *
+   * @return The md5 checksum as a String
+   * @throws RuntimeException if the java runtime does not provide the md5 algorithm
+   */
   public String md5() {
-
     MessageDigest md5;
     try {
       md5 = MessageDigest.getInstance("md5");
@@ -164,16 +169,16 @@ public class BitmapValidator {
       throw new RuntimeException(e);
     }
 
-
     for (FileDirectory dir : image.getFileDirectories()) {
       Rasters rasters = dir.readRasters();
+      ByteOrder byteOrder = dir.getReader().getByteOrder();
 
       int height = rasters.getHeight();
       int bands  = rasters.getSamplesPerPixel();
 
       for (int y = 0; y < height; y++) {
           for (int band = 0; band < bands; band++) {
-            md5.update(rasters.getSampleRow(y,band, ByteOrder.nativeOrder()));
+            md5.update(rasters.getSampleRow(y, band, byteOrder));
           }
         }
       }
