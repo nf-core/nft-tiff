@@ -1,4 +1,6 @@
 process COPY_TIFF {
+    publishDir params.outdir, enabled: true 
+
     input:
     path(tiff)
 

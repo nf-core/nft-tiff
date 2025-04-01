@@ -1,0 +1,12 @@
+{
+    "check bitmap equivalence with checksums": {
+        "content": [
+            "8049CA66E476C46D940661BF56FE73A5"
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.5"
+        },
+        "timestamp": "2025-03-26T08:39:02.544076475"
+    }
+}
