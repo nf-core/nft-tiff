@@ -1,0 +1,145 @@
+nextflow_process {
+
+    name "Validate tiff metadata"
+    script "./main.nf"
+    process "COPY_TIFF"
+
+    tag "metadata"
+
+    test("check metadata equivalence") {
+        when {
+            process {
+                """
+                input[0] = Channel.of(
+                    file("${baseDir}/tests/mindagap.mouse_heart.wga.tiff", checkIfExists:true),
+                )
+                """
+            }
+        }
+        then {
+            def tiff = path(process.out.tiff[0]).tiff
+            def reference = path("${baseDir}/tests/mindagap.mouse_heart.wga.tiff").tiff
+            assert tiff.meta == reference.meta
+        }
+    }
+
+    test("check tiff dimension equivalence") {
+        when {
+            process {
+                """
+                input[0] = Channel.of(
+                    file("${baseDir}/tests/nuclear_image.tif", checkIfExists:true),
+                )
+                """
+            }
+        }
+        then {
+            def tiff = path(process.out.tiff[0]).tiff
+            def dimensions = tiff.meta.getDimensions()
+
+            assert snapshot(dimensions).match()
+        }
+    }
+
+    test("check metadata field count and field names equivalence") {
+        when {
+            process {
+                """
+                input[0] = Channel.of(
+                    file("${baseDir}/tests/mindagap.mouse_heart.wga.tiff", checkIfExists:true),
+                )
+                """
+            }
+        }
+        then {
+            def tiff = path(process.out.tiff[0]).tiff
+            def fieldCount = tiff.meta.getFieldCounts()
+            def fieldNames = tiff.meta.getFieldNames()
+
+            assert snapshot(
+                fieldCount,
+                fieldNames
+            ).match()
+        }
+    }
+
+    test("check metadata value equivalence for selected fields") {
+        when {
+            process {
+                """
+                input[0] = Channel.of(
+                    file("${baseDir}/tests/mindagap.mouse_heart.wga.tiff", checkIfExists:true),
+                )
+                """
+            }
+        }
+        then {
+            def tiff = path(process.out.tiff[0]).tiff
+            def fieldNames = ['ImageWidth', 'PlanarConfiguration', 'Compression']
+            def fields = tiff.meta.getFields(fieldNames)
+
+            assert snapshot(fields).match()
+        }
+    }
+
+    test("check metadata value equivalence for single field") {
+        when {
+            process {
+                """
+                input[0] = Channel.of(
+                    file("${baseDir}/tests/mindagap.mouse_heart.wga.tiff", checkIfExists:true),
+                )
+                """
+            }
+        }
+        then {
+            def tiff = path(process.out.tiff[0]).tiff
+            def fieldName = 'ImageWidth'
+            def fields = tiff.meta.getFields(fieldName)
+
+            assert snapshot(fields).match()
+        }
+    }
+
+    test("check metadata value equivalence for all fields") {
+        when {
+            process {
+                """
+                input[0] = Channel.of(
+                    file("${baseDir}/tests/mindagap.mouse_heart.wga.tiff", checkIfExists:true),
+                )
+                """
+            }
+        }
+        then {
+            def tiff = path(process.out.tiff[0]).tiff
+            def fields = tiff.meta.getFields()
+
+            assert snapshot(fields).match()
+        }
+    }
+    
+
+
+    test("detect invalid metadata field") {
+        when {
+            process {
+                """
+                input[0] = Channel.of(
+                    file("${baseDir}/tests/mindagap.mouse_heart.wga.tiff", checkIfExists:true),
+                )
+                """
+            }
+        }
+        then {
+            def tiff = path(process.out.tiff[0]).tiff
+            def fieldName = 'NotValid'
+
+            try {
+                tiff.meta.getFields(fieldName)
+            } catch (Exception e)  {
+                assert e.message == "Invalid field tag: NotValid"
+            }
+        }
+    }
+}
