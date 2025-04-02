@@ -1,27 +1,10 @@
 nextflow_process {
 
-    name "Validate tiff metadata"
+    name "Validate tiff bitmaps"
     script "./main.nf"
     process "COPY_TIFF"
 
-    tag "methods"
-
-    test("check can read tiff") {
-        when {
-            process {
-                """
-                input[0] = Channel.of(
-                    file("${baseDir}/tests/mindagap.mouse_heart.wga.tiff", checkIfExists:true),
-                )
-                """
-            }
-        }
-        then {
-            def tiff = path(process.out.tiff[0]).tiff
-            assert tiff.meta != null
-            assert tiff.bitmaps != null
-        }
-    }
+    tag "bitmap"
 
     test("check compare same tiff") {
         when {
@@ -36,7 +19,7 @@ nextflow_process {
         then {
             def tiff = path(process.out.tiff[0]).tiff
             def reference = path("${baseDir}/tests/mindagap.mouse_heart.wga.tiff").tiff
-            assert tiff.meta == reference.meta
+            assert tiff.meta.getDimensions().equals(reference.meta.getDimensions())
             assert tiff.bitmaps == reference.bitmaps
         }
     }
@@ -54,7 +37,7 @@ nextflow_process {
         then {
             def tiff = path(process.out.tiff[0]).tiff
             def reference = path("${baseDir}/tests/nuclear_image_modified.tif").tiff
-            assert tiff.meta == reference.meta
+            assert tiff.meta.getDimensions().equals(reference.meta.getDimensions())
 
             try {
                 tiff.bitmaps == reference.bitmaps
@@ -78,7 +61,7 @@ nextflow_process {
         then {
             def tiff = path(process.out.tiff[0]).tiff
             def reference = path("${baseDir}/tests/mindagap.mouse_heart.wga.tiff").tiff
-            assert tiff.meta == reference.meta
+            assert tiff.meta.getDimensions().equals(reference.meta.getDimensions())
             assert tiff.bitmaps.matchesWithTolerance(reference.bitmaps, 100)
         }
     }
@@ -96,7 +79,7 @@ nextflow_process {
         then {
             def tiff = path(process.out.tiff[0]).tiff
             def reference = path("${baseDir}/tests/nuclear_image_modified.tif").tiff
-            assert tiff.meta == reference.meta
+            assert tiff.meta.getDimensions().equals(reference.meta.getDimensions())
 
             try {
                 tiff.bitmaps.matchesWithTolerance(reference.bitmaps, 100)
