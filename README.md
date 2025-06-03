@@ -22,11 +22,4 @@ assert tiff.meta == reference.meta
 assert tiff.bitmaps == reference.bitmaps
 ```
 
-Since this is just a stub, both approaches (metadata and bitmaps) it compares only the image height and width.
-
-### Possible extensions
-
-- More detailing comparisons of metadata/bitmap data
-- Comparing only specific dirs, rather than all of them
-- Specifying lists of metadata fields to compare
-- Supporting out-of-order dirs?
+Additional granular comparison features for metadata and bitmaps are described in the [usage documentation](./docs/usage.md).
