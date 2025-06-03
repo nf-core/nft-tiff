@@ -29,7 +29,7 @@ assert dim == referenceDim
 
 ## Check for field counts
 
-The number of metadata fields in each directory of a TIFF file can be checked using the `meta.getFieldCounts()` function :
+The number of metadata fields in each directory of a TIFF file can be checked using the `meta.getFieldCounts()` function:
 
 ```groovy
 def tiff = path('image.tiff').tiff
@@ -88,7 +88,7 @@ assert tiff.bitmaps == reference.bitmaps
 ```
 
 ## Bitmap comparison with tolerance
-A comparison of bitmaps, where a certain percentage of entries must be equal, can be performed using the bitmaps.matchesWithTolerance() function:
+A comparison of bitmaps, where a certain percentage of entries must be equal, can be performed using the `bitmaps.matchesWithTolerance()` function:
 
 ```groovy
 def tiff      = path('image.tiff').tiff
