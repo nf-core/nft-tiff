@@ -107,8 +107,8 @@ The values of bitmaps can be compared using `md5` checksums using the `bitmaps.m
 def tiff      = path('image.tiff').tiff
 def reference = path('reference.tiff').tiff
 
-md5Sum          = tiff.bitmaps.md5()
-referenceMd5Sum = reference.bitmaps.md5()
+def md5Sum          = tiff.bitmaps.md5()
+def referenceMd5Sum = reference.bitmaps.md5()
 
 assert md5Sum == referenceMd5Sum
 ```
