@@ -4,7 +4,7 @@
   <groupId>com.nf-core</groupId>
   <artifactId>nft-tiff</artifactId>
   <name>nft-tiff</name>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
   <description>An nf-test plugin to test nft-tiff files</description>
   <url>https://github.com/nf-core/nft-tiff</url>
   <licenses>
