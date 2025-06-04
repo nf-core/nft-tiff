@@ -1,5 +1,5 @@
 moduleName=nft-tiff
-moduleVersion=0.1.0
+moduleVersion=0.2.0
 moduleAuthors=nf-core
 extensionMethods=nf_core.nf.test.tiff.Methods
 extensionClasses=nf_core.nf.test.tiff.PathExtension
